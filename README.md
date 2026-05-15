@@ -57,11 +57,7 @@ A instalação deve ser feita a partir do ambiente oficial **Gentoo Minimal Inst
 Nota: use o correto para a arquitetura da sua CPU.
 
 ### 1. Preparação
-Dê boot com a ISO oficial do Gentoo e ligue-se à internet:
-```bash
-# Se usar Wi-Fi
-iwctl
-```
+Dê boot com a ISO oficial do Gentoo e ligue-se à internet.
 
 ### 2. Execução
 O Bit-OS automatiza o particionamento, a extração do Stage3, a compilação do Kernel e a configuração final. Corra o comando:
@@ -79,6 +75,9 @@ Aviso: O script é auto-suficiente. Ele finalizará a instalação, desmontará 
 - **OpenRC Nativo:** O Bit-OS suporta apenas o OpenRC. Não há suporte para Systemd, garantindo um sistema minimalista e scripts de inicialização legíveis.
 - **Rolling Release:** O sistema atualiza-se continuamente. Não existem "versões fixas", apenas o estado mais recente dos repositórios.
 - **Downgrades via Git:** Como o GitHub guarda todo o histórico, é possível reverter o instalador para versões anteriores. No entanto, a Next Level Software Studio não recomenda esta prática em sistemas já instalados devido ao risco de quebra de dependências binárias.
+
+## 📦 Gestão de Pacotes
+O Bit-OS utiliza o bpm (Bit-OS Package Manager). Este gestor foi construído como uma camada de abstração sobre o Portage, simplificando a sintaxe e automatizando tarefas comuns de manutenção sem sacrificar a flexibilidade do Gentoo.
 
 ## 📜 Licença e Propriedade Intelectual
 A licença está disponível em: https://raw.githubusercontent.com/NextLevelSoftwareStudio/Bit-OS/refs/heads/main/LICENSE

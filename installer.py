@@ -2,8 +2,9 @@ import locale
 
 # lang = 'pt_PT', encoding = 'UTF-8'
 lang, encoding = locale.getdefaultlocale()
-portuguese = ["oi", "olá"]
-english = ["bye", "goodbye"]
+portuguese = ["português", "portuguese", "portugiesisch"]
+english = ["inglês", "english", "englisch"]
+german = ["alemão", "german", "deutsch"]
 
 while True:
     entrada = input("Digite algo: ")
