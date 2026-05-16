@@ -1,2 +1,7 @@
 from pathlib import Path
-logfile = Path("/System/var/log/IntegrityCheck.log")
+systemfolder = Path("/System")
+usersfolder = Path("/Users")
+logfile = systemfolder / "var" / "log" / "IntegrityCheck.log"
+systemfolder.mkdir(parents=True, exist_ok=True)
+usersfolder.mkdir(parents=True, exist_ok=True)
+logfile.touch(exist_ok=True)
