@@ -1,8 +1,10 @@
 #!/bin/bash
+
+#Boot initializing
 STARTUP_FOLDERS=(
     "/File System/System/Startup/System", #Do not change
     "/File System/System/Startup/Users" #Do not change
-    
+
     # Add more folders here if needed, just make sure to separate them with a comma and no spaces
 )
 if [[ ${#STARTUP_FOLDERS[@]} -eq 0 ]]; then
@@ -24,3 +26,37 @@ for STARTUP_FOLDER in "${STARTUP_FOLDERS[@]}"; do
     ' bash {} +
 done
 echo "Initializing was ended with success."
+
+# Login initializing
+LOGIN_FOLDERS=(
+    "/File System/System/Log-in/Users" #Do not change
+
+    # Add more folders here if needed, just make sure to separate them with a comma and no spaces
+)
+users=()
+for user_path in /home/*; do
+    if [ -d "$user_path" ]; then
+        users+=("$(basename "$user_path")")
+    fi
+done
+for login_folder in "${LOGINFOLDERS[@]}"; do
+    mkdir -p "$login_folder"
+    if [ -d "$login_folder" ] && [ "$(ls -A "$login_folder")" ]; then
+        for folder in "$login_folder"/*; do
+            if [ -d "$folder" ]; then
+                folder_name=$(basename "$folder")
+                if [[ " ${users[*]} " =~ " ${folder_name} " ]]; then
+                    if [ "$(ls -A "$folder")" ]; then
+                        for file in "$folder"/*; do
+                            if [ -f "$file" ]; then
+                                chmod +x "$file"
+                                "$file"
+                            fi
+                        done
+                    fi
+                    
+                fi
+            fi
+        done
+    fi
+done

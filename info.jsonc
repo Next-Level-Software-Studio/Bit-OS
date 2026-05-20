@@ -1,0 +1,13 @@
+{
+    "amd64": {
+        "updating emergency": "",
+        "commit": ""
+    },
+    "Specific Hardware": {
+        "Raspberry Pi 5": {
+            "updating emergency": "",
+            "commit": ""
+        }
+    }
+}
+/* Escala: minimal, low, medium, big, high*/
