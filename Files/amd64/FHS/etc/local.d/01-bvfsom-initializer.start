@@ -1,1 +1,2 @@
-sudo system-python "" ""
+#!/bin/bash
+sudo "/System/Bit-OS Virtual File System Overlay Manager/bvfsom.sh"
