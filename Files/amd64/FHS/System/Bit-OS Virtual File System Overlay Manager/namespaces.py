@@ -44,5 +44,3 @@ class bvfso(pyfuse3.Operations):
         return super().mknod(parent_inode, name, mode, rdev, ctx)
     def init(self):
         return super().init()
-if __name__ == "__main__":
-    
