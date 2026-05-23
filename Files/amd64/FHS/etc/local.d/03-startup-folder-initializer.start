@@ -2,10 +2,7 @@
 
 #Boot initializing
 STARTUP_FOLDERS=(
-    "/File System/System/Startup/System" 
-    "/File System/System/Startup/Users"
-
-
+    "/System/Startup"
     # Add more folders here if needed, just make sure to separate them with a comma and no spaces
 )
 if [[ ${#STARTUP_FOLDERS[@]} -eq 0 ]]; then
