@@ -1,2 +1,2 @@
-sudo "/System/Bit-OS Virtual File System Overlay Manager/namespaces.py"
 sudo system-python "/System/Bit-OS Virtual File System Overlay Manager/fuse.py" "/System/Bit-OS Virtual File System Overlay Manager/Overlay"
+sudo "/System/Bit-OS Virtual File System Overlay Manager/namespaces.py"
