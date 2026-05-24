@@ -1,0 +1,7 @@
+amd64   base            dev
+amd64   normal          stable
+amd64   development     stable
+amd64   gaming          stable
+amd64   minimal         stable
+amd64   server          stable
+amd64   study           stable

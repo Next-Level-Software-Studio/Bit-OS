@@ -1,2 +1,4 @@
-USE=""
-PYTHON
+CFLAGS="-02 -pipe -march=native"
+EMERGE_DEFAULT_OPS="--with-bdeps=y --verbose=y --quiet-build=n"
+PYTHON_SINGLE_TARGET="python3_13"
+PYTHON_TARGETS="python3_13 python3_14"
