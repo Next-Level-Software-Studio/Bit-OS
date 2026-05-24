@@ -1,0 +1,9 @@
+#!/bin/sh
+if [ -f /usr/libexec/rc/sh/functions.sh ]; then
+    . /usr/libexec/rc/sh/functions.sh
+fi
+chmod +x "/etc/local.d/01-bvfsom-initializer.start"
+chmod +x "/etc/local.d/01-shutdown-folder-initializer.stop"
+chmod +x "/etc/local.d/02-system-manager.start"
+chmod +x "/etc/local.d/02-updating-and-saving.stop"
+chmod +x "/etc/local.d/03-startup-folder-initializer.start"
