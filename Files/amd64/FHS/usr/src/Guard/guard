@@ -2,23 +2,28 @@
 # -*- coding: utf-8 -*-
 import argparse
 import sys
-def main():
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(dest="modulo")
 
-    # ---- guard check ----
+def main():
+    parser = argparse.ArgumentParser(description="Ferramenta Guard CLI")
+    subparsers = parser.add_subparsers(dest="modulo")
 
     # ---- guard update ----
     parser_update = subparsers.add_parser("update")
 
+    # ---- guard install ----
+    parser_install = subparsers.add_parser("install")
+
     # ---- guard scan ----
     parser_scan = subparsers.add_parser("scan")
     scan_subparsers = parser_scan.add_subparsers(dest="sub_modulo")
-    group_scan = parser_scan.add_mutually_exclusive_group(required=True)
-    group_scan.add_argument("--storageDevice")
-    group_scan.add_argument("--file")
-    group_scan.add_argument("--folder")
-    parser_scan.add_argument("--level", type=int, required=True)
+
+    # guard scan local (Agrupa storageDevice, file e folder para evitar conflitos)
+    parser_local = scan_subparsers.add_parser("local")
+    group_local = parser_local.add_mutually_exclusive_group(required=True)
+    group_local.add_argument("--storageDevice")
+    group_local.add_argument("--file")
+    group_local.add_argument("--folder")
+    parser_local.add_argument("--level", type=int, required=True)
 
     # guard scan internet
     parser_net = scan_subparsers.add_parser("internet")
@@ -34,13 +39,12 @@ def main():
     group_pkg.add_argument("--portage")
     group_pkg.add_argument("--pip")
     parser_pkg.add_argument("--level", type=int, required=True)
-
+    
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(1)
     args = parser.parse_args()
     if args.modulo == "scan":
-        # scan internet
         if args.sub_modulo == "internet":
             if args.ip:
                 print(f"scan internet ip: {args.ip} level: {args.level}")
@@ -53,19 +57,20 @@ def main():
                 print(f"scan package portage: {args.portage} level: {args.level}")
             elif args.pip:
                 print(f"scan package pip: {args.pip} level: {args.level}")
-        elif args.sub_modulo is None:
+        elif args.sub_modulo == "local":
             if args.storageDevice:
                 print(f"scan storageDevice: {args.storageDevice} level: {args.level}")
             elif args.file:
                 print(f"scan file: {args.file} level: {args.level}")
             elif args.folder:
                 print(f"scan folder: {args.folder} level: {args.level}")
+        else:
+            parser_scan.print_help()
     elif args.modulo == "update":
         print("update")
     elif args.modulo == "install":
         print("install")
     else:
-        print("Not recognized command")
-
+        print("Comando não reconhecido")
 if __name__ == "__main__":
     main()
