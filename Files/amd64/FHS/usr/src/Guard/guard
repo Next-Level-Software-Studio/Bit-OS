@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+import argparse
+import sys
+def main():
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest="modulo")
+
+    # ---- guard check ----
+
+    # ---- guard update ----
+    parser_update = subparsers.add_parser("update")
+
+    # ---- guard scan ----
+    parser_scan = subparsers.add_parser("scan")
+    scan_subparsers = parser_scan.add_subparsers(dest="sub_modulo")
+    group_scan = parser_scan.add_mutually_exclusive_group(required=True)
+    group_scan.add_argument("--storageDevice")
+    group_scan.add_argument("--file")
+    group_scan.add_argument("--folder")
+    parser_scan.add_argument("--level", type=int, required=True)
+
+    # guard scan internet
+    parser_net = scan_subparsers.add_parser("internet")
+    group_net = parser_net.add_mutually_exclusive_group(required=True)
+    group_net.add_argument("--ip")
+    group_net.add_argument("--url")
+    group_net.add_argument("--domain")
+    parser_net.add_argument("--level", type=int, required=True)
+
+    # guard scan package
+    parser_pkg = scan_subparsers.add_parser("package")
+    group_pkg = parser_pkg.add_mutually_exclusive_group(required=True)
+    group_pkg.add_argument("--portage")
+    group_pkg.add_argument("--pip")
+    parser_pkg.add_argument("--level", type=int, required=True)
+
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(1)
+    args = parser.parse_args()
+    if args.modulo == "scan":
+        # scan internet
+        if args.sub_modulo == "internet":
+            if args.ip:
+                print(f"scan internet ip: {args.ip} level: {args.level}")
+            elif args.url:
+                print(f"scan internet url: {args.url} level: {args.level}")
+            elif args.domain:
+                print(f"scan internet domain: {args.domain} level: {args.level}")
+        elif args.sub_modulo == "package":
+            if args.portage:
+                print(f"scan package portage: {args.portage} level: {args.level}")
+            elif args.pip:
+                print(f"scan package pip: {args.pip} level: {args.level}")
+        elif args.sub_modulo is None:
+            if args.storageDevice:
+                print(f"scan storageDevice: {args.storageDevice} level: {args.level}")
+            elif args.file:
+                print(f"scan file: {args.file} level: {args.level}")
+            elif args.folder:
+                print(f"scan folder: {args.folder} level: {args.level}")
+    elif args.modulo == "update":
+        print("update")
+    elif args.modulo == "install":
+        print("install")
+    else:
+        print("Not recognized command")
+
+if __name__ == "__main__":
+    main()
