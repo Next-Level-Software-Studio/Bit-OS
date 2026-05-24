@@ -1,3 +1,0 @@
-SYS_OVERLAY_REPO="https://github.com/NextLevelSoftwareStudio/Bit-OS"
-SYS_OVERLAY_CURRENT="https://github.com/NextLevelSoftwareStudio/Bit-OS/tree/main/Overlays/overlay_amd64"
-SYS_OVERLAY_INFO="https://github.com/NextLevelSoftwareStudio/Bit-OS/blob/main/info.json"
