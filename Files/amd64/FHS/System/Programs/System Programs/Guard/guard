@@ -10,8 +10,6 @@ def main():
     # ---- guard update ----
     parser_update = subparsers.add_parser("update")
 
-    # ---- guard install ----
-    parser_install = subparsers.add_parser("install")
 
     # ---- guard scan ----
     parser_scan = subparsers.add_parser("scan")
@@ -39,6 +37,12 @@ def main():
     group_pkg.add_argument("--portage")
     group_pkg.add_argument("--pip")
     parser_pkg.add_argument("--level", type=int, required=True)
+
+    # guard firewall on/off
+    parser_firewall = subparsers.add_parser("firewall")
+    firewall_subparsers = parser_firewall.add_subparsers(dest="action")
+    firewall_subparsers.add_parser("on")
+    firewall_subparsers.add_parser("off")
     
     if len(sys.argv) == 1:
         parser.print_help()
@@ -68,8 +72,13 @@ def main():
             parser_scan.print_help()
     elif args.modulo == "update":
         print("update")
-    elif args.modulo == "install":
-        print("install")
+    elif args.modulo == "firewall":
+        if args.action == "on":
+            print("firewall on")
+        elif args.action == "off":
+            print("firewall off")
+        else:
+            parser_firewall.print_help()
     else:
         print("Comando não reconhecido")
 if __name__ == "__main__":
