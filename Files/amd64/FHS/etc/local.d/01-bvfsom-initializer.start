@@ -1,2 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+if [ -f /usr/libexec/rc/sh/functions.sh ]; then
+    . /usr/libexec/rc/sh/functions.sh
+fi
 sudo "/System/Bit-OS Virtual File System Overlay Manager/bvfsom.sh"

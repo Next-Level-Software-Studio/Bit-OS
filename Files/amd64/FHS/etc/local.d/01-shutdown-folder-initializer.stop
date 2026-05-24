@@ -1,4 +1,7 @@
-#!/bin/bash
+#!/bin/sh
+if [ -f /usr/libexec/rc/sh/functions.sh ]; then
+    . /usr/libexec/rc/sh/functions.sh
+fi
 SHUTDOWN_FOLDERS=(
     "/System/Shutdown"
     # Add more folders here if needed, just make sure to separate them with a comma and no spaces
