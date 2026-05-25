@@ -1,4 +1,4 @@
-/*Only for Raspberry Pi 5, not forRaspberry Pi Compute Module 5*/
+/*Only for Raspberry Pi 5, not for Raspberry Pi Compute Module 5*/
 {
     "cpu": {
         "1": {
