@@ -3,19 +3,21 @@
 import argparse
 import sys
 
+
 def main():
     parser = argparse.ArgumentParser(description="Ferramenta Guard CLI")
-    subparsers = parser.add_subparsers(dest="modulo")
+    # Adicionado required=True para o módulo principal
+    subparsers = parser.add_subparsers(dest="modulo", required=True)
 
     # ---- guard update ----
     parser_update = subparsers.add_parser("update")
 
-
     # ---- guard scan ----
     parser_scan = subparsers.add_parser("scan")
-    scan_subparsers = parser_scan.add_subparsers(dest="sub_modulo")
+    # CRITICO: Adicionado required=True aqui para forçar a escolha de local/internet/package
+    scan_subparsers = parser_scan.add_subparsers(dest="sub_modulo", required=True)
 
-    # guard scan local (Agrupa storageDevice, file e folder para evitar conflitos)
+    # guard scan local
     parser_local = scan_subparsers.add_parser("local")
     group_local = parser_local.add_mutually_exclusive_group(required=True)
     group_local.add_argument("--storageDevice")
@@ -40,14 +42,19 @@ def main():
 
     # guard firewall on/off
     parser_firewall = subparsers.add_parser("firewall")
-    firewall_subparsers = parser_firewall.add_subparsers(dest="action")
+    # CRITICO: Adicionado required=True para forçar a escolha de on/off
+    firewall_subparsers = parser_firewall.add_subparsers(dest="action", required=True)
     firewall_subparsers.add_parser("on")
     firewall_subparsers.add_parser("off")
     
+    # Tratamento para quando nenhum argumento é passado
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(1)
+        
     args = parser.parse_args()
+    
+    # Com o required=True, a validação fica muito mais limpa e segura:
     if args.modulo == "scan":
         if args.sub_modulo == "internet":
             if args.ip:
@@ -56,11 +63,13 @@ def main():
                 print(f"scan internet url: {args.url} level: {args.level}")
             elif args.domain:
                 print(f"scan internet domain: {args.domain} level: {args.level}")
+                
         elif args.sub_modulo == "package":
             if args.portage:
                 print(f"scan package portage: {args.portage} level: {args.level}")
             elif args.pip:
                 print(f"scan package pip: {args.pip} level: {args.level}")
+                
         elif args.sub_modulo == "local":
             if args.storageDevice:
                 print(f"scan storageDevice: {args.storageDevice} level: {args.level}")
@@ -68,18 +77,15 @@ def main():
                 print(f"scan file: {args.file} level: {args.level}")
             elif args.folder:
                 print(f"scan folder: {args.folder} level: {args.level}")
-        else:
-            parser_scan.print_help()
+                
     elif args.modulo == "update":
         print("update")
+        
     elif args.modulo == "firewall":
         if args.action == "on":
             print("firewall on")
         elif args.action == "off":
             print("firewall off")
-        else:
-            parser_firewall.print_help()
-    else:
-        print("Comando não reconhecido")
+
 if __name__ == "__main__":
     main()
