@@ -10,4 +10,4 @@
 *sys-apps/apparmor-profiles
 *app-forensics/rkhunter
 *app-forensics/chkrootkit
-*dev-lang/python:3.13
+*app-admin.sudo
