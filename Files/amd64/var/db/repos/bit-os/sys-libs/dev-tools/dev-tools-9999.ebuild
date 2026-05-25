@@ -30,12 +30,12 @@ src_compile() {
 
 src_install() {
 	# 1. Executa a instalação padrão do seu Makefile 
-	# (que deve jogar os arquivos em ${D}/usr/lib64/bit-os)
+	# (que deve jogar os arquivos em ${D}/usr/lib64/bit-os/dev-tools)
 	emake DESTDIR="${D}" install
 
 	# 2. Cria um arquivo temporário de ambiente
 	# O número 99 define a prioridade de leitura do arquivo
-	echo "LDPATH=\"/usr/lib64/bit-os\"" > "${T}/99bit-os"
+	echo "LDPATH=\"/usr/lib64/bit-os/dev-tools\"" > "${T}/99bit-os"
 
 	# 3. Instala o arquivo de ambiente no sistema de destino
 	doenvd "${T}/99bit-os"
