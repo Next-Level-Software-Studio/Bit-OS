@@ -3,89 +3,52 @@
 import argparse
 import sys
 
+# Nota para desenvolvedores "RTP" significa
+# aqui: "Real-Time Protection".
 
 def main():
-    parser = argparse.ArgumentParser(description="Ferramenta Guard CLI")
-    # Adicionado required=True para o módulo principal
-    subparsers = parser.add_subparsers(dest="modulo", required=True)
+    parser = argparse.ArgumentParser(description="Ferramenta Guard CLI Simplificada")
+    subparsers = parser.add_subparsers(dest="command", required=True)
 
-    # ---- guard update ----
-    parser_update = subparsers.add_parser("update")
+    parser_scan = subparsers.add_parser("scan", help="Scan de um alvo")
+    parser_scan.add_argument("target", metavar="STRING", help="String do alvo")
+    parser_scan.add_argument("--nivel", type=int, required=True, help="Número inteiro do nível")
 
-    # ---- guard scan ----
-    parser_scan = subparsers.add_parser("scan")
-    # CRITICO: Adicionado required=True aqui para forçar a escolha de local/internet/package
-    scan_subparsers = parser_scan.add_subparsers(dest="sub_modulo", required=True)
+    parser_allow = subparsers.add_parser("allow", help="Permitir um alvo")
+    parser_allow.add_argument("target", metavar="STRING", help="String do alvo")
+    parser_allow.add_argument("--nivel", type=int, required=True, help="Número inteiro do nível")
 
-    # guard scan local
-    parser_local = scan_subparsers.add_parser("local")
-    group_local = parser_local.add_mutually_exclusive_group(required=True)
-    group_local.add_argument("--storageDevice")
-    group_local.add_argument("--file")
-    group_local.add_argument("--folder")
-    parser_local.add_argument("--level", type=int, required=True)
+    parser_block = subparsers.add_parser("block", help="Bloquear um alvo")
+    parser_block.add_argument("target", metavar="STRING", help="String do alvo")
+    parser_block.add_argument("--nivel", type=int, required=True, help="Número inteiro do nível")
 
-    # guard scan internet
-    parser_net = scan_subparsers.add_parser("internet")
-    group_net = parser_net.add_mutually_exclusive_group(required=True)
-    group_net.add_argument("--ip")
-    group_net.add_argument("--url")
-    group_net.add_argument("--domain")
-    parser_net.add_argument("--level", type=int, required=True)
+    parser_rtp = subparsers.add_parser("rtp", help="Configurar modo RTP")
+    parser_rtp.add_argument("value", choices=["true", "false"], help="Valor booleano para rtp")
 
-    # guard scan package
-    parser_pkg = scan_subparsers.add_parser("package")
-    group_pkg = parser_pkg.add_mutually_exclusive_group(required=True)
-    group_pkg.add_argument("--portage")
-    group_pkg.add_argument("--pip")
-    parser_pkg.add_argument("--level", type=int, required=True)
+    parser_firewall = subparsers.add_parser("firewall", help="Configurar firewall")
+    parser_firewall.add_argument("value", choices=["true", "false"], help="Valor booleano para firewall")
 
-    # guard firewall on/off
-    parser_firewall = subparsers.add_parser("firewall")
-    # CRITICO: Adicionado required=True para forçar a escolha de on/off
-    firewall_subparsers = parser_firewall.add_subparsers(dest="action", required=True)
-    firewall_subparsers.add_parser("on")
-    firewall_subparsers.add_parser("off")
-    
-    # Tratamento para quando nenhum argumento é passado
+    subparsers.add_parser("update", help="Atualizar guard")
+
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(1)
-        
+
     args = parser.parse_args()
-    
-    # Com o required=True, a validação fica muito mais limpa e segura:
-    if args.modulo == "scan":
-        if args.sub_modulo == "internet":
-            if args.ip:
-                print(f"scan internet ip: {args.ip} level: {args.level}")
-            elif args.url:
-                print(f"scan internet url: {args.url} level: {args.level}")
-            elif args.domain:
-                print(f"scan internet domain: {args.domain} level: {args.level}")
-                
-        elif args.sub_modulo == "package":
-            if args.portage:
-                print(f"scan package portage: {args.portage} level: {args.level}")
-            elif args.pip:
-                print(f"scan package pip: {args.pip} level: {args.level}")
-                
-        elif args.sub_modulo == "local":
-            if args.storageDevice:
-                print(f"scan storageDevice: {args.storageDevice} level: {args.level}")
-            elif args.file:
-                print(f"scan file: {args.file} level: {args.level}")
-            elif args.folder:
-                print(f"scan folder: {args.folder} level: {args.level}")
-                
-    elif args.modulo == "update":
-        print("update")
-        
-    elif args.modulo == "firewall":
-        if args.action == "on":
-            print("firewall on")
-        elif args.action == "off":
-            print("firewall off")
+
+    if args.command == "scan":
+        print(f"Executando: guard scan {args.target} --nivel {args.nivel}")
+    elif args.command == "allow":
+        print(f"Executando: guard allow {args.target} --nivel {args.nivel}")
+    elif args.command == "block":
+        print(f"Executando: guard block {args.target} --nivel {args.nivel}")
+    elif args.command == "rtp":
+        print(f"Executando: guard rtp {args.value}")
+    elif args.command == "firewall":
+        print(f"Executando: guard firewall {args.value}")
+    elif args.command == "update":
+        print("Executando: guard update")
+
 
 if __name__ == "__main__":
     main()
