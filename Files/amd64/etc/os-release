@@ -1,4 +1,9 @@
 NAME="Bit-OS"
-ID=bit-os
-ID_LIKE=gentoo
+ID="bit-os"
+ID_LIKE="gentoo"
 PRETTY_NAME="Bit-OS"
+VERSION=""
+VERSION_ID=""
+HOME_URL=""
+SUPPORT_URL=""
+BUG_REPORT_URL=""
