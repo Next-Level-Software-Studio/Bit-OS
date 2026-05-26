@@ -6,6 +6,14 @@ import sys
 # Nota para desenvolvedores "RTP" significa
 # aqui: "Real-Time Protection".
 
+def datatype(data):
+    if type(data) != str:
+        print("What you want to scan needs to be a string.")
+    elif type(data) == str:
+        protocols = ["https://", "http://"]
+        if (data.startswith("https://") or data.startswith):
+            return "url"
+
 def main():
     parser = argparse.ArgumentParser(description="Ferramenta Guard CLI Simplificada")
     subparsers = parser.add_subparsers(dest="command", required=True)
