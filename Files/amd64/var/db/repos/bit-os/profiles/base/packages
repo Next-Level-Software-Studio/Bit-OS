@@ -9,15 +9,20 @@
 *app-forensics/rkhunter
 *app-forensics/chkrootkit
 *app-admin.sudo
+*net-analyzer/wireshark
 
 #SELinux policies
-*selinux-chkrootkit
-*selinux-clamav
-*selinux-dbus
-*selinux-fail2ban
-*selinux-git
-*selinux-networkmanager
-*selinux-openrc
-*selinux-rkhunter
-
+*sec-policy/selinux-chkrootkit
+*sec-policy/selinux-clamav
+*sec-policy/selinux-dbus
+*sec-policy/selinux-fail2ban
+*sec-policy/selinux-git
+*sec-policy/selinux-networkmanager
+*sec-policy/selinux-openrc
+*sec-policy/selinux-rkhunter
+*sec-policy/selinux-shutdown
+*sec-policy/selinux-sudo
+*sec-policy/selinux-tor
+*sec-policy/selinux-wayland
+*sec-policy/selinux-wireshark
 #
