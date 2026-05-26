@@ -8,7 +8,7 @@
 *net-analyzer/fail2ban
 *app-forensics/rkhunter
 *app-forensics/chkrootkit
-*app-admin.sudo
+*app-admin/sudo
 *net-analyzer/wireshark
 
 #SELinux policies
@@ -25,4 +25,5 @@
 *sec-policy/selinux-tor
 *sec-policy/selinux-wayland
 *sec-policy/selinux-wireshark
+*sec-policy/selinux-xserver
 #
