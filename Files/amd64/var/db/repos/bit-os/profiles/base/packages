@@ -9,3 +9,15 @@
 *app-forensics/rkhunter
 *app-forensics/chkrootkit
 *app-admin.sudo
+
+#SELinux policies
+*selinux-chkrootkit
+*selinux-clamav
+*selinux-dbus
+*selinux-fail2ban
+*selinux-git
+*selinux-networkmanager
+*selinux-openrc
+*selinux-rkhunter
+
+#
