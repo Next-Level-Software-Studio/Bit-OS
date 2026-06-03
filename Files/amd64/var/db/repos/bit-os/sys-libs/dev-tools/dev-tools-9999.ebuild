@@ -4,7 +4,7 @@
 EAPI=8
 
 DESCRIPTION="Ferramentas de desenvolvimento do Bit-OS"
-HOMEPAGE="https://bit-os.org"
+HOMEPAGE=""
 
 LICENSE="GPL-2"
 SLOT="0"

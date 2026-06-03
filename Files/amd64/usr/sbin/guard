@@ -3,7 +3,7 @@
 import argparse
 import sys
 
-# Nota para desenvolvedores "RTP" significa
+# Nota para desenvolvedores, "RTP" significa
 # aqui: "Real-Time Protection".
 
 def datatype(data):
@@ -20,15 +20,15 @@ def main():
 
     parser_scan = subparsers.add_parser("scan", help="Scan de um alvo")
     parser_scan.add_argument("target", metavar="STRING", help="String do alvo")
-    parser_scan.add_argument("--nivel", type=int, required=True, help="Número inteiro do nível")
+    parser_scan.add_argument("--level", type=int, required=True, help="Número inteiro do nível")
 
     parser_allow = subparsers.add_parser("allow", help="Permitir um alvo")
     parser_allow.add_argument("target", metavar="STRING", help="String do alvo")
-    parser_allow.add_argument("--nivel", type=int, required=True, help="Número inteiro do nível")
+    parser_allow.add_argument("--level", type=int, required=True, help="Número inteiro do nível")
 
     parser_block = subparsers.add_parser("block", help="Bloquear um alvo")
     parser_block.add_argument("target", metavar="STRING", help="String do alvo")
-    parser_block.add_argument("--nivel", type=int, required=True, help="Número inteiro do nível")
+    parser_block.add_argument("--level", type=int, required=True, help="Número inteiro do nível")
 
     parser_rtp = subparsers.add_parser("rtp", help="Configurar modo RTP")
     parser_rtp.add_argument("value", choices=["true", "false"], help="Valor booleano para rtp")
@@ -45,11 +45,11 @@ def main():
     args = parser.parse_args()
 
     if args.command == "scan":
-        print(f"Executando: guard scan {args.target} --nivel {args.nivel}")
+        print(f"Executando: guard scan {args.target} --level {args.level}")
     elif args.command == "allow":
-        print(f"Executando: guard allow {args.target} --nivel {args.nivel}")
+        print(f"Executando: guard allow {args.target} --level {args.level}")
     elif args.command == "block":
-        print(f"Executando: guard block {args.target} --nivel {args.nivel}")
+        print(f"Executando: guard block {args.target} --level {args.level}")
     elif args.command == "rtp":
         print(f"Executando: guard rtp {args.value}")
     elif args.command == "firewall":

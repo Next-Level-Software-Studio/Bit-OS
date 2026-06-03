@@ -1,7 +1,8 @@
 *app-eselect/eselect-python
 *dev-db/sqlite
 *net-misc/wget
-*dev-lang/python-3.14.5
+*app-portage/gentoolkit
+*dev-lang/python-3.14.5 # Atualize para a versão mais atual estável do CPython
 *net-firewall/ufw
 *app-antivirus/clamav
 *net-misc/openrdap
@@ -10,8 +11,11 @@
 *app-forensics/chkrootkit
 *app-admin/sudo
 *net-analyzer/wireshark
-
-#SELinux policies
+*app-forensics/aide
+*sys-apps/usbguard
+*sys-apps/policycoreutils
+*sys-libs/libselinux
+*sys-libs/libsemanage
 *sec-policy/selinux-chkrootkit
 *sec-policy/selinux-clamav
 *sec-policy/selinux-dbus
@@ -25,6 +29,10 @@
 *sec-policy/selinux-tor
 *sec-policy/selinux-wayland
 *sec-policy/selinux-wireshark
-*sec-policy/selinux-xserver
-*sec-policy/
-#
+*sec-policy/selinux-aide
+*sec-policy/selinux-base-policy
+*sec-policy/selinux-chronyd
+*sec-policy/selinux-dbus
+*sec-policy/selinux-openrc
+*sec-policy/selinux-usbguard
+*sec-policy/selinux-base

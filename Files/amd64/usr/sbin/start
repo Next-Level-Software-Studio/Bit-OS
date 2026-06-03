@@ -1,0 +1,84 @@
+#!/usr/bin/usr/python
+import portage, sys, subprocess, os
+import os
+
+def tty():
+    return "DISPLAY" in os.environ or "WAYLAND_DISPLAY" in os.environ
+
+if tty():
+    print("You're in grafical environment.\nYou must be in a TTY to start this program.")
+
+if not tty():
+    if not os.geteuid() == 0:
+        print("You must be root to run this program.")
+        sys.exit(1)
+    elif os.geteuid() == 0:
+        packages = {"gnome-base/gnome-session": "GNOME", "kde-plasma/plasma-workspace": "KDE Plasma"}
+        instalados = [is_installed(pkg) for pkg in packages.keys()]
+
+        def is_installed(package):
+            try:
+                dbapi = portage.db[portage.root]["vartree"].dbapi
+                installed_versions = dbapi.cp_list(package)
+                return bool(installed_versions)
+            except Exception as e:
+                print(f"Error acessing Portage database: {e}", file=sys.stderr)
+                return False
+        all_installed = all(is_installed(i) for i in packages)
+
+        if not all_installed:
+            counter = 1
+            print("Choose a desktop environment to install:\n")
+            for i in packages.keys():
+                print(f"{counter} - {packages[i]}")
+                counter += 1
+            question = int(input("\nEnter a number (Ctrl + C to cancel): "))
+
+            if question <= len(packages) and question > 0:
+                answer = list(packages.keys())[question - 1]
+                if answer == "gnome-base/gnome-session":
+                    print("Installing GNOME...")
+                    try:
+                        subprocess.run(["emerge", "gnome-base/gnome-session"], check=True)
+                    except Exception as e:
+                        print(f"Error installing GNOME: {e}")
+
+                elif answer == "kde-plasma/plasma-workspace":
+                    print("Installing KDE Plasma...")
+                    try:
+                        subprocess.run(["emerge", "kde-plasma/plasma-workspace"], check=True)
+                    except Exception as e:
+                        print(f"Error installing KDE Plasma: {e}")
+
+        elif all_installed:
+            print("Choose a desktop environment to start:\n")
+            for i in packages.keys():
+                print(f"{counter} - {packages[i]}")
+                counter += 1
+                question = int(input("\nEnter a number (Ctrl + C to cancel): "))
+                if question <= len(packages) and question > 0:
+                    answer = list(packages.keys())[question - 1]
+                    if answer == "gnome-base/gnome-session":
+                        print("Starting GNOME...")
+                        try:
+                            subprocess.run(["XDG_SESSION_TYPE=wayland", "dbus-run-session", "gnome-session"], check=True)
+                        except Exception as e:
+                            print(f"Error starting GNOME: {e}")
+                    elif answer == "kde-plasma/plasma-workspace":
+                        print("Starting KDE Plasma...")
+                        try:
+                            subprocess.run(["dbus-run-session", "startplasma-wayland"], check=True)
+                        except Exception as e:
+                            print(f"Error starting KDE Plasma: {e}")
+
+        elif sum(instalados) == 1:
+            for pkg, _ in packages.items():
+                if is_installed(pkg):
+                    print(f"Starting {pkg}...")
+                    try:
+                        if pkg == "gnome-base/gnome-session":
+                            subprocess.run(["XDG_SESSION_TYPE=wayland", "dbus-run-session", "gnome-session"], check=True)
+                        elif pkg == "kde-plasma/plasma-workspace":
+                            subprocess.run(["dbus-run-session", "startplasma-wayland"], check=True)
+                    except Exception as e:
+                        print(f"Error starting {pkg}: {e}")

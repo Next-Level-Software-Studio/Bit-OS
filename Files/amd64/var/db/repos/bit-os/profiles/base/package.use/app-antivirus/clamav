@@ -1,0 +1,1 @@
+app-antivirus/clamav -test -systemd selinux iconv doc -debug bzip2 xml rar system-mspack metadata-analysis-api clamonacc clamapp
