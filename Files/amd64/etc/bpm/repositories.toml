@@ -1,0 +1,15 @@
+# Here you can configure the repositories that BPM will use to find packages.
+# You can have multiple repositories, and BPM will search them in order when you try to install a package.
+
+
+# Example:
+
+# [[repository_name]]
+# url = "https://example.com/repo.git"
+# type = git   # The type of repository. Can be "git", "local", or "https".
+
+[[main]]
+url = "https://github.com/Next-Level-Software-Studio/Bit-OS-Overlay.git"
+type = "git"
+
+# add your repositories below this line
