@@ -26,4 +26,5 @@
 *sec-policy/selinux-wayland
 *sec-policy/selinux-wireshark
 *sec-policy/selinux-xserver
+*sec-policy/
 #
