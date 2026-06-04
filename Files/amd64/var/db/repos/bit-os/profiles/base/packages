@@ -8,6 +8,7 @@
 *net-misc/openrdap
 *net-analyzer/fail2ban
 *app-forensics/rkhunter
+*dev-python/python-magic
 *app-forensics/chkrootkit
 *app-admin/sudo
 *net-analyzer/wireshark

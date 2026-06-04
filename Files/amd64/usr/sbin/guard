@@ -1,29 +1,42 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import argparse, sys, os
+import argparse, sys, os, magic, mimetypes
 from pathlib import Path
+
+# Bibliotecas adicionais instaladas:
+# dev-python/python-magic
 
 # Note for developers: "RTP" means
 # here: "Real-Time Protection".
-
+def is_valid_mime(mime_type):
+    
 def objecttype(data):
     if type(data) != str:
-        sys.exit(1)
-        print("What you want to scan needs to be a string.")
+        sys.exit(64)
+        print(f"What you want to scan needs to be a string, not a {type(data).__name__}.")
 
     elif type(data) == str:
 
         protocols = ["https://", "http://"]
         # Create the list using only the real block device names
-        dispositivos = [f"/dev/{d}" for d in os.listdir('/sys/block/') if d.startswith(('sd', 'nvme', 'vd'))]
+        data_devices = [f"/dev/{d}" for d in os.listdir('/sys/block/') if d.startswith(('sd', 'nvme', 'vd'))]
 
         if data.startswith(tuple(protocols)):
             return "url"
         elif Path(data).is_file():
-            return "file"
+            mimetypes.init(files=[]) # Avoid using the system's MIME types database
+            
+
+            detector = magic.Magic(mime=True)
+            mime_type = detector.from_file(data)
+            type_of_file_object = "file:".join(mime_type.replace("/", ":"))
+            if mime_type.startswith("image/"):
+                return type_of_file_object
+            else:
+                return "file"
         elif Path(data).is_dir():
             return "directory"
-        elif data in dispositivos:
+        elif data in data_devices:
             return "data_device"
         else:
             return "unknown"
