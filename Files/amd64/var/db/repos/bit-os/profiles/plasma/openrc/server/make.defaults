@@ -1,2 +1,0 @@
-CFLAGS="-02 -pipe -march=native"
-EMERGE_DEFAULT_OPS="--with-bdeps=y --verbose=y --quiet-build=n --keep-going=y --backtrack=10"

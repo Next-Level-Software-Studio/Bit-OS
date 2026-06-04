@@ -1,8 +1,0 @@
-CFLAGS="-02 -pipe -march=native -fstack-protector-strong -fstack-clash-protection"
-EMERGE_DEFAULT_OPS="--with-bdeps=y --verbose=y --quiet-build=n"
-PYTHON_SINGLE_TARGET="python3_13"
-PYTHON_TARGETS="python3_13 python3_14"
-LC_MESSAGES=C.UTF-8
-MAKEOPTS="(( ($(nproc) * 3 + 3) / 4 ))"
-USE="verify-sig selinux"
-FEATURES="ccache parallel-fetch splitdebug compressdebug usersandbox fail-clean candy"
