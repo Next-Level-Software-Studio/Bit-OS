@@ -1,2 +1,5 @@
 app-editors/vscode
 dev-vcs/git
+dev-vcs/git-lfs
+net-misc/wget
+app-editors/nano
