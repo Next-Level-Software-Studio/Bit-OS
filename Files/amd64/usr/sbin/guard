@@ -1,42 +1,56 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import argparse
-import sys
+import argparse, sys, os
+from pathlib import Path
 
-# Nota para desenvolvedores, "RTP" significa
-# aqui: "Real-Time Protection".
+# Note for developers: "RTP" means
+# here: "Real-Time Protection".
 
-def datatype(data):
+def objecttype(data):
     if type(data) != str:
+        sys.exit(1)
         print("What you want to scan needs to be a string.")
+
     elif type(data) == str:
+
         protocols = ["https://", "http://"]
-        if (data.startswith("https://") or data.startswith):
+        # Create the list using only the real block device names
+        dispositivos = [f"/dev/{d}" for d in os.listdir('/sys/block/') if d.startswith(('sd', 'nvme', 'vd'))]
+
+        if data.startswith(tuple(protocols)):
             return "url"
+        elif Path(data).is_file():
+            return "file"
+        elif Path(data).is_dir():
+            return "directory"
+        elif data in dispositivos:
+            return "data_device"
+        else:
+            return "unknown"
 
 def main():
-    parser = argparse.ArgumentParser(description="Ferramenta Guard CLI Simplificada")
+    parser = argparse.ArgumentParser(description="Simplified Guard CLI Tool")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    parser_scan = subparsers.add_parser("scan", help="Scan de um alvo")
-    parser_scan.add_argument("target", metavar="STRING", help="String do alvo")
-    parser_scan.add_argument("--level", type=int, required=True, help="Número inteiro do nível")
+    parser_scan = subparsers.add_parser("scan", help="Scan a target")
+    parser_scan.add_argument("target", metavar="STRING", help="Target string")
+    parser_scan.add_argument("--level", type=int, required=True, help="Integer level number")
 
-    parser_allow = subparsers.add_parser("allow", help="Permitir um alvo")
-    parser_allow.add_argument("target", metavar="STRING", help="String do alvo")
-    parser_allow.add_argument("--level", type=int, required=True, help="Número inteiro do nível")
+    parser_allow = subparsers.add_parser("allow", help="Allow a target")
+    parser_allow.add_argument("target", metavar="STRING", help="Target string")
+    parser_allow.add_argument("--level", type=int, required=True, help="Integer level number")
 
-    parser_block = subparsers.add_parser("block", help="Bloquear um alvo")
-    parser_block.add_argument("target", metavar="STRING", help="String do alvo")
-    parser_block.add_argument("--level", type=int, required=True, help="Número inteiro do nível")
+    parser_block = subparsers.add_parser("block", help="Block a target")
+    parser_block.add_argument("target", metavar="STRING", help="Target string")
+    parser_block.add_argument("--level", type=int, required=True, help="Integer level number")
 
-    parser_rtp = subparsers.add_parser("rtp", help="Configurar modo RTP")
-    parser_rtp.add_argument("value", choices=["true", "false"], help="Valor booleano para rtp")
+    parser_rtp = subparsers.add_parser("rtp", help="Configure RTP mode")
+    parser_rtp.add_argument("value", choices=["true", "false"], help="Boolean value for rtp")
 
-    parser_firewall = subparsers.add_parser("firewall", help="Configurar firewall")
-    parser_firewall.add_argument("value", choices=["true", "false"], help="Valor booleano para firewall")
+    parser_firewall = subparsers.add_parser("firewall", help="Configure firewall")
+    parser_firewall.add_argument("value", choices=["true", "false"], help="Boolean value for firewall")
 
-    subparsers.add_parser("update", help="Atualizar guard")
+    subparsers.add_parser("update", help="Update guard")
 
     if len(sys.argv) == 1:
         parser.print_help()
@@ -45,17 +59,17 @@ def main():
     args = parser.parse_args()
 
     if args.command == "scan":
-        print(f"Executando: guard scan {args.target} --level {args.level}")
+        print(f"Running: guard scan {args.target} --level {args.level}")
     elif args.command == "allow":
-        print(f"Executando: guard allow {args.target} --level {args.level}")
+        print(f"Running: guard allow {args.target} --level {args.level}")
     elif args.command == "block":
-        print(f"Executando: guard block {args.target} --level {args.level}")
+        print(f"Running: guard block {args.target} --level {args.level}")
     elif args.command == "rtp":
-        print(f"Executando: guard rtp {args.value}")
+        print(f"Running: guard rtp {args.value}")
     elif args.command == "firewall":
-        print(f"Executando: guard firewall {args.value}")
+        print(f"Running: guard firewall {args.value}")
     elif args.command == "update":
-        print("Executando: guard update")
+        print("Running: guard update")
 
 
 if __name__ == "__main__":
