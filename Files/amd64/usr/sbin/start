@@ -3,7 +3,8 @@ import portage, sys, subprocess, os
 import os
 
 def tty():
-    return "DISPLAY" in os.environ or "WAYLAND_DISPLAY" in os.environ
+    #return "DISPLAY" in os.environ or "WAYLAND_DISPLAY" in os.environ
+    return False
 
 if tty():
     print("You're in grafical environment.\nYou must be in a TTY to start this program.")
@@ -13,8 +14,6 @@ if not tty():
         print("You must be root to run this program.")
         sys.exit(1)
     elif os.geteuid() == 0:
-        packages = {"gnome-base/gnome-session": "GNOME", "kde-plasma/plasma-workspace": "KDE Plasma"}
-        instalados = [is_installed(pkg) for pkg in packages.keys()]
 
         def is_installed(package):
             try:
@@ -24,8 +23,13 @@ if not tty():
             except Exception as e:
                 print(f"Error acessing Portage database: {e}", file=sys.stderr)
                 return False
-        all_installed = all(is_installed(i) for i in packages)
 
+        packages = {"gnome-base/gnome-core-libs": "GNOME", "kde-plasma/kwin": "KDE Plasma", "sys-apps/portage": "TTY"}
+        # A chave "sys-apps/portage" foi escolhido pois, não há pacote para o TTY,
+        # e todo sistema funcional de Gentoo devia ter esse pacote.
+        all_installed = all(is_installed(i) for i in packages)
+        instalados = [is_installed(pkg) for pkg in packages.keys()]
+        
         if not all_installed:
             counter = 1
             print("Choose a desktop environment to install:\n")
