@@ -8,7 +8,6 @@ from pathlib import Path
 
 # Note for developers: "RTP" means
 # here: "Real-Time Protection".
-def is_valid_mime(mime_type):
     
 def objecttype(data):
     if type(data) != str:
@@ -26,7 +25,6 @@ def objecttype(data):
         elif Path(data).is_file():
             mimetypes.init(files=[]) # Avoid using the system's MIME types database
             
-
             detector = magic.Magic(mime=True)
             mime_type = detector.from_file(data)
             type_of_file_object = "file:".join(mime_type.replace("/", ":"))
