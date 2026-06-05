@@ -13,5 +13,7 @@
     "editor.rulers": [80, 120],
     "editor.renderWhitespace": "boundary",
     "editor.bracketPairColorization.enabled": true,
-    "editor.lightbulb.enabled": "off"
+    "editor.lightbulb.enabled": "off",
+    "telemetry.telemetryLevel": "off",
+    "workbench.enableExperiments": false
 }
